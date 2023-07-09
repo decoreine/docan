@@ -1,0 +1,21 @@
+1 - in app/http/Controller add 2 folder Dashboard & Site
+
+2 - Install laravel-translatable
+    Install the package via composer:
+        composer require spatie/laravel-translatable
+3 - Install mcamara laravel-localization
+    Install the package via composer:
+        composer require mcamara/laravel-localization
+    Config Files
+        php artisan vendor:publish --provider="Mcamara\LaravelLocalization\LaravelLocalizationServiceProvider"
+    add to $middlewareAliases in app/Http/Kernel.php
+        'localize'                => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRoutes::class,
+        'localizationRedirect'    => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRedirectFilter::class,
+        'localeSessionRedirect'   => \Mcamara\LaravelLocalization\Middleware\LocaleSessionRedirect::class,
+        'localeCookieRedirect'    => \Mcamara\LaravelLocalization\Middleware\LocaleCookieRedirect::class,
+        'localeViewPath'          => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationViewPath::class
+4 - Installing Laravel DataTables
+    Install the package via composer:
+        composer require yajra/laravel-datatables:^10.0
+    Configuration
+        php artisan vendor:publish --tag=datatables
