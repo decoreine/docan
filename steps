@@ -1,3 +1,24 @@
+0 - Github
+    create a new repository on the command line
+        composer create-project --prefer-dist laravel/laravel docan or laravel new docan --pest --breeze (pest foir test unit)
+        cd docan
+        git init
+        git add .
+        git commit -m "first commit"
+        git remote add origin https://github.com/decoreine/docan.git // you have to crete reprosity
+        git push origin master
+
+    push an existing repository from the command line
+        git remote add origin https://github.com/decoreine/docan.git
+        git branch -M begin // create new brench
+        git push origin begin //push to new brunch you can use git push -u origin {{ brench_name }}
+
+    clone repository
+        git clone https://github.com/decoreine/docan.git // clone master
+        git clone -b begin https://github.com/decoreine/docan.git // clone { begin ,breeze_vue,breeze_blade }
+
+
+
 1 - in app/http/Controller add 2 folder Dashboard & Site
 
 2 - Install laravel-translatable
@@ -19,3 +40,10 @@
         composer require yajra/laravel-datatables:^10.0
     Configuration
         php artisan vendor:publish --tag=datatables
+4 - Installing Laravel Breeze Blade
+    Install the package via composer:
+        composer require laravel/breeze --dev
+        php artisan breeze:install blade
+        php artisan migrate
+        npm install
+        npm run dev
