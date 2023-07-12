@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import ApplicationLogo from '@/Components/ApplicationLogo.vue';
+import ApplicationLogo from '@/Components/Logo/ApplicationLogo.vue';
 import { Link } from '@inertiajs/vue3';
 </script>
 
 <template>
+    <!-- Guest Lyout -->
     <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100 dark:bg-gray-900">
         <div>
             <Link href="/">
@@ -17,4 +18,5 @@ import { Link } from '@inertiajs/vue3';
             <slot />
         </div>
     </div>
+    <!-- End Guest Lyout -->
 </template>
