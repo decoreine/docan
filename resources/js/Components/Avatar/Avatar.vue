@@ -12,6 +12,7 @@ const props = defineProps({
     medium: { type: Boolean },
     large: { type: Boolean },
     x_large: { type: Boolean },
+    xl_large: { type: Boolean },
 })
 
 const avatarClasses = computed(() => [
@@ -19,6 +20,7 @@ const avatarClasses = computed(() => [
     props.medium && !props.small && !props.large && 'w-8 h-8',
     props.large && 'w-12 h-12',
     props.x_large && 'w-16 h-16',
+    props.xl_large && 'w-24 h-24',
     props.rounded && 'rounded-full',
 ])
 </script>

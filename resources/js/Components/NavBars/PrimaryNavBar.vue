@@ -1,30 +1,23 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import ApplicationLogo from '@/Components/Logo/ApplicationLogo.vue';
 import Dropdown from '@/Components/Dropdowns/Dropdown.vue';
+import DropdownLink from '@/Components/Dropdowns/DropdownLink.vue';
+import HorizontalNavLink from '@/Components/NavElements/HorizontalNavLink.vue';
 import VerticalNavLink from '@/Components/NavElements/VerticalNavLink.vue';
+import { Link } from '@inertiajs/vue3';
 
-const showingResponsiveVerticalDropdown = ref(false);
-let humButtonState: boolean = false;
+const showingNavigationDropdown = ref(false);
+const showingOptionsDropdown = ref(false);
+
 import { computed } from 'vue';
+
 
 const props = defineProps<{
     wide?: boolean;
-    sticky?: boolean; // to get this value use {{ props.sticky }}
-}>();  // OR
-/*
-const props = defineProps({
-    wide: boolean,
-    sticky: boolean
-});
-*/
-/*
-if you want to add default value use
-const props = withDefaults(defineProps<{
-    wide?: boolean;
-}>(),{wide = true});
-
- */
-
+    sticky?: boolean;
+    title?: string;
+}>();
 
 const classes = computed(() =>
     props.wide ? 'bg-white px-4 sm:px-6 lg:px-8': 'max-w-7xl mx-auto bg-white px-4 sm:px-6 lg:px-8'
@@ -35,12 +28,6 @@ const heading_classes = computed(() =>
 const nav_class = computed(() =>
     props.sticky ? 'sticky top-0 z-40 bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700': 'z-40 bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700'
 );
-const emit = defineEmits(['humButtonStatechanged'])
-function humButtonStateChanged() {
-    humButtonState = !humButtonState;
-    emit('humButtonStatechanged',humButtonState )
-    return humButtonState;
-}
 
 </script>
 <template>
@@ -50,17 +37,18 @@ function humButtonStateChanged() {
         <div :class="classes">
             <div class="flex justify-between h-16">
                 <div class="flex">
+
                     <!-- Hamburger Button-->
                     <div class="mr-2 flex items-center sm:hidden">
                         <button
-                            @click="humButtonState = humButtonStateChanged()"
+                            @click="showingNavigationDropdown = !showingNavigationDropdown"
                             class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-900 focus:text-gray-500 dark:focus:text-gray-400 transition duration-150 ease-in-out"
                         >
                             <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                                 <path
                                     :class="{
-                                            hidden: humButtonState,
-                                            'inline-flex': !humButtonState,
+                                            hidden: showingNavigationDropdown,
+                                            'inline-flex': !showingNavigationDropdown,
                                         }"
                                     stroke-linecap="round"
                                     stroke-linejoin="round"
@@ -69,8 +57,8 @@ function humButtonStateChanged() {
                                 />
                                 <path
                                     :class="{
-                                            hidden: !humButtonState,
-                                            'inline-flex': humButtonState,
+                                            hidden: !showingNavigationDropdown,
+                                            'inline-flex': showingNavigationDropdown,
                                         }"
                                     stroke-linecap="round"
                                     stroke-linejoin="round"
@@ -81,18 +69,26 @@ function humButtonStateChanged() {
                         </button>
                     </div>
                     <!-- End Hamburger Button-->
+
                     <!-- Logo -->
                     <div class="shrink-0 flex items-center">
-                        <slot name="Logo"/>
+                        <Link :href="route('dashboard')">
+                            <ApplicationLogo
+                                class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200"
+                            />
+                        </Link>
                     </div>
                     <!-- End Logo -->
-
                     <!-- Horizontal Navigation Links -->
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                        <slot name="HorizontalNavigationLinks"/>
+                        <HorizontalNavLink :href="route('dashboard')" :active="route().current('dashboard')">
+                            Dashboard
+                        </HorizontalNavLink>
+                        <HorizontalNavLink :href="route('profile.edit')" :active="route().current('profile.edit')">
+                            Profile
+                        </HorizontalNavLink>
                     </div>
                     <!-- End Horizontal Navigation Links -->
-
                 </div>
                 <div class="flex">
                     <!-- Principal Dropdown -->
@@ -125,27 +121,27 @@ function humButtonStateChanged() {
                                 </template>
 
                                 <template #content>
-                                    <slot name="VerticalDropdown"/>
+                                    <DropdownLink :href="route('profile.edit')"  :active="route().current('profile.edit')"> Profile </DropdownLink>
+                                    <DropdownLink :href="route('logout')" method="post" as="button">
+                                        Log Out
+                                    </DropdownLink>
                                 </template>
-
                             </Dropdown>
                         </div>
                     </div>
                     <!-- End Principal Dropdown -->
 
-
-
                     <!-- Humberger 2 -->
                     <div class="-mr-2 flex items-center sm:hidden">
                         <button
-                            @click="showingResponsiveVerticalDropdown = !showingResponsiveVerticalDropdown;"
+                            @click="showingOptionsDropdown = !showingOptionsDropdown;"
                             class="text-slate-500 w-8 h-8 flex items-center justify-center hover:text-slate-600 dark:text-slate-400 dark:hover:text-slate-300"
                         >
                             <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                                 <path
                                     :class="{
-                                            hidden: showingResponsiveVerticalDropdown,
-                                            'inline-flex': !showingResponsiveVerticalDropdown,
+                                            hidden: showingOptionsDropdown,
+                                            'inline-flex': !showingOptionsDropdown,
                                         }"
                                     stroke-linecap="round"
                                     stroke-linejoin="round"
@@ -154,8 +150,8 @@ function humButtonStateChanged() {
                                 />
                                 <path
                                     :class="{
-                                            hidden: !showingResponsiveVerticalDropdown,
-                                            'inline-flex': showingResponsiveVerticalDropdown,
+                                            hidden: !showingOptionsDropdown,
+                                            'inline-flex': showingOptionsDropdown,
                                         }"
                                     stroke-linecap="round"
                                     stroke-linejoin="round"
@@ -177,7 +173,7 @@ function humButtonStateChanged() {
     <div :class="heading_classes">
         <header class="bg-white dark:bg-gray-800 shadow">
             <div class="py-2 space-x-2  sm:flex">
-                <slot name="Title"/>
+                <h2 class="font-semibold py-2 px-4 text-xl text-gray-800 dark:text-gray-200 leading-tight">{{ title }}</h2>
             </div>
         </header>
     </div>
@@ -189,9 +185,46 @@ function humButtonStateChanged() {
 
 
     <!-- this contnent is example of menue when hunerger is clicked -->
+
+    <!-- Humberger SideBar -->
+    <div
+        :class="{ block: showingNavigationDropdown, hidden: !showingNavigationDropdown }"
+        class="sm:hidden"
+    >
+        <div class="pt-2 pb-3 space-y-1">
+
+            <VerticalNavLink :href="route('dashboard')" :active="route().current('dashboard')">
+                Dashboard
+            </VerticalNavLink>
+
+        </div>
+
+        <!-- Responsive Settings Options For Large Screen -->
+        <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
+
+            <div class="px-4">
+                <div class="font-medium text-base text-gray-800 dark:text-gray-200">
+                    {{ $page.props.auth.user.name }}
+                </div>
+                <div class="font-medium text-sm text-gray-500">{{ $page.props.auth.user.email }}</div>
+            </div>
+
+            <div class="mt-3 space-y-1">
+                <VerticalNavLink :href="route('profile.edit')" :active="route().current('profile.edit')">
+                    Profile
+                </VerticalNavLink>
+                <VerticalNavLink :href="route('logout')" method="post" as="button">
+                    Log Out
+                </VerticalNavLink>
+            </div>
+
+        </div>
+    </div>
+    <!-- End Humberger SideBar -->
+
     <!-- Responsive Settings Options  For Small Screen-->
     <div
-        :class="{ block: showingResponsiveVerticalDropdown, hidden: !showingResponsiveVerticalDropdown }"
+        :class="{ block: showingOptionsDropdown, hidden: !showingOptionsDropdown }"
         class="sm:hidden absolute z-10 bg-white w-full"
     >
         <div class="pt-2 pb-3 space-y-1">
@@ -204,7 +237,12 @@ function humButtonStateChanged() {
                 </div>
 
                 <div class="mt-3 space-y-1">
-                    <slot name="ResponsiveVerticalDropdown"/>
+                    <VerticalNavLink :href="route('profile.edit')" :active="route().current('profile.edit')">
+                        Profile
+                    </VerticalNavLink>
+                    <VerticalNavLink :href="route('logout')" method="post" as="button">
+                        Log Out
+                    </VerticalNavLink>
                 </div>
             </div>
         </div>
