@@ -25,13 +25,14 @@ const emit = defineEmits(['humButtonStatechanged'])
 function humButtonStateChanged() {
     humButtonState = !humButtonState;
     if(showingResponsiveVerticalDropdown)
-        showingResponsiveVerticalDropdown.value = !showingResponsiveVerticalDropdown;
+        showingResponsiveVerticalDropdown.value = false;
     emit('humButtonStatechanged',humButtonState )
 }
 
 // create function and make it accible in parent component
 const reset = () => {
     humButtonState = false;
+    showingResponsiveVerticalDropdown.value = false;
 }
 defineExpose({
     reset
