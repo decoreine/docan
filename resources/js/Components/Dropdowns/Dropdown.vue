@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref } from 'vue';
 
+const open = ref(false);
+
 const props = withDefaults(
     defineProps<{
         align?: 'left' | 'right';
@@ -39,7 +41,6 @@ const alignmentClasses = computed(() => {
     }
 });
 
-const open = ref(false);
 </script>
 
 <template>

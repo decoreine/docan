@@ -4,33 +4,32 @@ import HorizontalNavLink from '@/Components/NavElements/HorizontalNavLink.vue';
 import DropdownLink from '@/Components/Dropdowns/DropdownLink.vue';
 import VerticalNavLink from '@/Components/NavElements/VerticalNavLink.vue';
 import ApplicationLogo from '@/Components/Logo/ApplicationLogo.vue';
+import SideBar from '@/Components/SideBars/MainSideBar.vue';
 import { Link } from '@inertiajs/vue3';
+import {ref} from 'vue'
 
-const props = defineProps<{
-    title?: string;
-}>();
-/*
-if you want to add default value use
-const props = withDefaults(defineProps<{
-    wide?: boolean;
-}>(),{wide = true});
+const props = withDefaults(
+    defineProps<{
+        title?: string;
+    }>(),
+    {
+        title: "Layout",
+    }
+);
 
- */
-</script>
+const isSideBarShown = ref(false)
 
-<script lang="ts">
-export default {
-    data() {
-        return {
-            showingSideBar: false,
-        };
-    },
-    methods: {
-        showSideBar(showing : boolean) {
-            this.showingSideBar = showing;
-        },
-    },
-};
+function setSideBarShown(showing : boolean) {
+    isSideBarShown.value = showing;
+}
+//create ref to make access to child function accicible and in child component definition  add ref="childComponentRef"
+const childComponentRef = ref()
+function closeSideBar() {
+    console.log("close");
+    isSideBarShown.value = false;
+    childComponentRef.value.reset() // call child function
+}
+
 </script>
 
 
@@ -40,7 +39,7 @@ export default {
 <template>
     <!-- AuthenticatedLayout -->
     <div class="min-h-screen bg-gray-100 dark:bg-gray-900 relative">
-            <PrimaryNavMenu wide sticky  @humButtonStatechanged="showSideBar">
+            <PrimaryNavMenu wide sticky  @humButtonStatechanged="setSideBarShown" ref="childComponentRef">
 
                 <template #Logo>
                     <Link :href="route('dashboard')">
@@ -80,74 +79,19 @@ export default {
                         Log Out
                     </VerticalNavLink>
                 </template>
-
-                <template #ResponsiveSideBar>
-                </template>
-
             </PrimaryNavMenu>
 
-
-            <!-- Responsive SideBar -->
-            <div :class="{ block: showingSideBar, hidden: !showingSideBar }" class="sm:hidden" >
-                <div class="relative z-10" aria-labelledby="slide-over-title" role="dialog" aria-modal="true">
-                    <!--
-                      Background backdrop, show/hide based on slide-over state.
-
-                      Entering: "ease-in-out duration-500"
-                        From: "opacity-0"
-                        To: "opacity-100"
-                      Leaving: "ease-in-out duration-500"
-                        From: "opacity-100"
-                        To: "opacity-0"
-                    -->
-                    <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
-
-                    <div class="fixed inset-0 overflow-hidden">
-                        <div class="absolute inset-0 overflow-hidden">
-                            <div class="pointer-events-none fixed inset-y-0 left-0 flex max-w-full pr-10">
-                                <!--
-                                  Slide-over panel, show/hide based on slide-over state.
-
-                                  Entering: "transform transition ease-in-out duration-500 sm:duration-700"
-                                    From: "translate-x-full"
-                                    To: "translate-x-0"
-                                  Leaving: "transform transition ease-in-out duration-500 sm:duration-700"
-                                    From: "translate-x-0"
-                                    To: "translate-x-full"
-                                -->
-                                <div class="pointer-events-auto relative w-screen max-w-xs">
-                                    <div class="flex h-full flex-col overflow-y-scroll bg-white py-6 shadow-xl">
-                                        <div class="px-4 sm:px-6">
-                                            <h2 class="text-base font-semibold leading-6 text-gray-900" id="slide-over-title">Panel title</h2>
-                                        </div>
-                                        <div class="relative mt-6 flex-1 px-4 sm:px-6">
-                                            <!-- Your content -->
-                                            <!-- Responsive Settings Options For Large Screen -->
-                                            <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
-                                                <div class="mt-3 space-y-1">
-                                                    <VerticalNavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                                                        Dashboard
-                                                    </VerticalNavLink>
-                                                    <VerticalNavLink :href="route('profile.edit')" :active="route().current('profile.edit')">
-                                                        Profile
-                                                    </VerticalNavLink>
-                                                    <VerticalNavLink :href="route('logout')" method="post" as="button">
-                                                        Log Out
-                                                    </VerticalNavLink>
-                                                </div>
-                                                <!-- End Responsive Settings Options For Large Screen -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-            </div>
-            <!-- End Responsive SideBar -->
+            <SideBar :show="isSideBarShown" :maxWidth="'xs'"  @close="closeSideBar">
+                <VerticalNavLink :href="route('dashboard')" :active="route().current('dashboard')">
+                    Dashboard
+                </VerticalNavLink>
+                <VerticalNavLink :href="route('profile.edit')" :active="route().current('profile.edit')">
+                    Profile
+                </VerticalNavLink>
+                <VerticalNavLink :href="route('logout')" method="post" as="button">
+                    Log Out
+                </VerticalNavLink>
+            </SideBar>
 
             <main>
                 <!-- Page Content -->

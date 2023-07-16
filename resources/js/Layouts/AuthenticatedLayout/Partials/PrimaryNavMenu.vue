@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import Dropdown from '@/Components/Dropdowns/Dropdown.vue';
-import VerticalNavLink from '@/Components/NavElements/VerticalNavLink.vue';
 
 const showingResponsiveVerticalDropdown = ref(false);
 let humButtonState: boolean = false;
@@ -10,21 +9,7 @@ import { computed } from 'vue';
 const props = defineProps<{
     wide?: boolean;
     sticky?: boolean; // to get this value use {{ props.sticky }}
-}>();  // OR
-/*
-const props = defineProps({
-    wide: boolean,
-    sticky: boolean
-});
-*/
-/*
-if you want to add default value use
-const props = withDefaults(defineProps<{
-    wide?: boolean;
-}>(),{wide = true});
-
- */
-
+}>();
 
 const classes = computed(() =>
     props.wide ? 'bg-white px-4 sm:px-6 lg:px-8': 'max-w-7xl mx-auto bg-white px-4 sm:px-6 lg:px-8'
@@ -35,12 +20,20 @@ const heading_classes = computed(() =>
 const nav_class = computed(() =>
     props.sticky ? 'sticky top-0 z-40 bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700': 'z-40 bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700'
 );
+
 const emit = defineEmits(['humButtonStatechanged'])
 function humButtonStateChanged() {
     humButtonState = !humButtonState;
     emit('humButtonStatechanged',humButtonState )
-    return humButtonState;
 }
+
+// create function and make it accible in parent component
+const reset = () => {
+    humButtonState = false;
+}
+defineExpose({
+    reset
+})
 
 </script>
 <template>
@@ -53,7 +46,7 @@ function humButtonStateChanged() {
                     <!-- Hamburger Button-->
                     <div class="mr-2 flex items-center sm:hidden">
                         <button
-                            @click="humButtonState = humButtonStateChanged()"
+                            @click="humButtonStateChanged()"
                             class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-900 focus:text-gray-500 dark:focus:text-gray-400 transition duration-150 ease-in-out"
                         >
                             <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
