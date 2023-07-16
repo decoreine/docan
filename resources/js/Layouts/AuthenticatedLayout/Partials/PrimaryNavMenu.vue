@@ -24,6 +24,8 @@ const nav_class = computed(() =>
 const emit = defineEmits(['humButtonStatechanged'])
 function humButtonStateChanged() {
     humButtonState = !humButtonState;
+    if(showingResponsiveVerticalDropdown)
+        showingResponsiveVerticalDropdown.value = !showingResponsiveVerticalDropdown;
     emit('humButtonStatechanged',humButtonState )
 }
 
