@@ -79,26 +79,24 @@ const maxWidthClass = computed(() => {
 
                 </transition>
                 <transition
-                    enter-active-class="transform transition ease-in-out duration-500 sm:duration-700"
-                    enter-from-class="translate-x-0"
-                    enter-to-class="translate-x-full"
-                    leave-active-class="transform transition ease-in-out duration-500 sm:duration-700"
-                    leave-from-class="translate-x-0"
-                    leave-to-class="translate-x-full"
+                    enter-active-class="duration-300 ease-out"
+                    enter-from-class="transform opacity-0"
+                    enter-to-class="opacity-100"
+                    leave-active-class="duration-200 ease-in"
+                    leave-from-class="opacity-100"
+                    leave-to-class="transform opacity-0"
                 >
 
-                    <div class="pointer-events-none fixed inset-y-0 left-0 flex max-w-full pr-10">
-                        <div
-                            v-show="show"
-                            :class="maxWidthClass" class="pointer-events-auto relative w-screen">
-                            <div class="flex h-full flex-col overflow-y-scroll bg-white py-2 shadow-xl">
+                    <div v-show="show" class="pointer-events-none fixed inset-y-0 left-0 flex max-w-full pr-10">
+                        <div :class="maxWidthClass" class="pointer-events-auto relative w-screen">
+                            <div class="flex h-full flex-col overflow-y-scroll bg-white py-2 shadow-xl  dark:bg-gray-800">
 
-                                <div class="pb-1 border-b border-gray-200 bg-white px-4 sm:px-6 lg:px-8">
+                                <div class="pb-1 border-b border-gray-200 px-4 sm:px-6 lg:px-8 dark:border-gray-500">
                                     <div class="flex justify-between h-16">
                                         <div class="flex">
                                             <!-- Logo -->
                                             <div class="shrink-0 flex items-center">
-                                                <a href="http://127.0.0.1:8000/dashboard">
+                                                <a href="http://127.0.0.1:8080/dashboard">
                                                     <svg viewBox="0 0 316 316" xmlns="http://www.w3.org/2000/svg"
                                                          class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200">
                                                         <path

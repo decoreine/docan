@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import PrimaryNavMenu from '@/Layouts/AuthenticatedLayout/Partials/PrimaryNavMenu.vue';
+import PrimaryNavBar from '@/Components/NavBars/PrimaryNavBar.vue';
+import SideBar from '@/Components/SideBars/MainSideBar.vue';
 import HorizontalNavLink from '@/Components/NavElements/HorizontalNavLink.vue';
 import DropdownLink from '@/Components/Dropdowns/DropdownLink.vue';
 import VerticalNavLink from '@/Components/NavElements/VerticalNavLink.vue';
 import ApplicationLogo from '@/Components/Logo/ApplicationLogo.vue';
-import SideBar from '@/Components/SideBars/MainSideBar.vue';
 import { Link } from '@inertiajs/vue3';
 import {ref} from 'vue'
 
@@ -39,7 +39,7 @@ function closeSideBar() {
 <template>
     <!-- AuthenticatedLayout -->
     <div class="min-h-screen bg-gray-100 dark:bg-gray-900 relative">
-            <PrimaryNavMenu wide sticky  @humButtonStatechanged="setSideBarShown" ref="childComponentRef">
+            <PrimaryNavBar wide sticky  @humButtonStatechanged="setSideBarShown" ref="childComponentRef">
 
                 <template #Logo>
                     <Link :href="route('dashboard')">
@@ -79,7 +79,7 @@ function closeSideBar() {
                         Log Out
                     </VerticalNavLink>
                 </template>
-            </PrimaryNavMenu>
+            </PrimaryNavBar>
 
             <SideBar :show="isSideBarShown" :maxWidth="'xs'"  @close="closeSideBar">
                 <VerticalNavLink :href="route('dashboard')" :active="route().current('dashboard')">
@@ -95,7 +95,11 @@ function closeSideBar() {
 
             <main>
                 <!-- Page Content -->
-                <slot />
+                <div class="py-4">
+                    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+                        <slot />
+                    </div>
+                </div>
                 <!-- End Page Content -->
             </main>
         </div>
