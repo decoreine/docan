@@ -1,5 +1,6 @@
 <template>
     <Head title="Dashboard" />
+    <ImageInput></ImageInput>
     <AuthenticatedLayout title="Dashboard">
 
         <!-- Dashboard -->
@@ -10,10 +11,38 @@
 
         <!-- DataTable -->
         <DataTable
-            :theader="tableHeader"
-            :data="tableData"
-            :items-per-page="5"
-            :items-per-page-dropdown-enabled="false">
+            :t_header=invoices_config
+            :t_data =invoices
+            title="Invoices table"
+            checkboxLabel="invoice"
+        >
+
+            <template v-slot:invoice="{ row: item }">
+                {{ item.invoice }}
+            </template>
+
+            <template v-slot:status="{ row: item }">
+                <a href="#" class="text-gray-600 text-hover-primary mb-1">
+                    <BadgeStatus :label="item.status.label" :state="item.status.state"></BadgeStatus>
+                </a>
+            </template>
+
+            <template v-slot:amount="{ row: item }">
+                {{ item.amount }}
+            </template>
+
+            <template v-slot:date="{ row: item }">
+                {{ item.date }}
+            </template>
+
+            <template v-slot:actions="{ row: item }">
+                <div  class="flex  py-4 space-x-3">
+                    <a :href="item.update"
+                       class="select-none font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                    <a :href="item.delete"
+                       class="select-none font-medium text-red-600 dark:text-red-500 hover:underline">Remove</a>
+                </div>
+            </template>
         </DataTable>
         <!-- End DataTable -->
 
@@ -21,149 +50,46 @@
 </template>
 <script setup lang="ts">
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import DataTable from '@/Components/DataTable/Datatable.vue';
+import ImageInput from '@/Components/Inputs/ImageInput.vue';
 import { Head } from '@inertiajs/vue3';
-import {ref} from 'vue'
-const tableHeader = ref([
+
+import DataTable from '@/Components/DataTable/Datatable.vue';
+import BadgeStatus from "@/Components/Indicators/BadgeStatus.vue";
+import invoices from "@/core/data/invoices";
+import {TableColumn} from "@/types/vite-env";
+
+const invoices_config : TableColumn[]= [
     {
         columnName: "Invoice No.",
         columnLabel: "invoice",
+        searchEnabled: false,
         sortEnabled: true,
     },
     {
         columnName: "Status",
         columnLabel: "status",
-        sortingField: "status.label",
         sortEnabled: false,
+        searchEnabled: false,
     },
     {
         columnName: "Amount",
         columnLabel: "amount",
-        sortEnabled: false,
+        sortEnabled: true,
+        searchEnabled: false,
     },
     {
         columnName: "Date",
         columnLabel: "date",
-        sortEnabled: false,
+        searchEnabled: false,
+        sortEnabled: true,
+        class:"whitespace-nowrap" // to make texe horizental all the time
     },
     {
         columnName: "Actions",
         columnLabel: "actions",
         sortEnabled: false,
+        searchEnabled: false,
     },
-]);
-const tableData = ref([
-    {
-        invoice: 123456,
-        description: "Payment for invoice",
-        amount: "$880.00",
-        status: {
-            label: "Pending",
-            state: "warning",
-        },
-        date: "21 Oct 2020, 5:54 pm",
-        actions: {
-            update : "",
-            delete : "",
-        }
-    },
-    {
-        invoice: 231451,
-        description: "Monthly utilites",
-        amount: "$7,650.00",
-        status: {
-            label: "Successful",
-            state: "success",
-        },
-        date: "19 Oct 2020, 7:32 am",
-        actions: {
-            update : "",
-            delete : "",
-        }
-    },
-    {
-        invoice: 345612,
-        description: "Payment for invoice",
-        amount: "$375.00",
-        status: {
-            label: "Successful",
-            state: "success",
-        },
-        date: "23 Sep 2020, 12:38 am",
-        actions: {
-            update : "",
-            delete : "",
-        }
-    },
-    {
-        invoice:456123,
-        description: "Hosting Fees",
-        amount: "$129.00",
-        status: {
-            label: "Successful",
-            state: "success",
-        },
-        date: "11 Sep 2020, 3:18 pm",
-        actions: {
-            update : "",
-            delete : "",
-        }
-    },
-    {
-        invoice:561234,
-        description: "Marketing automation",
-        amount: "$450.00",
-        status: {
-            label: "Rejected",
-            state: "danger",
-        },
-        date: "03 Sep 2020, 1:08 am",
-        actions: {
-            update : "",
-            delete : "",
-        }
-    },
-    {
-        invoice:612345,
-        description: "Sales injection",
-        amount: "$8,700.00",
-        status: {
-            label: "Pending",
-            state: "warning",
-        },
-        date: "01 Sep 2020, 4:58 pm",
-        actions: {
-            update : "",
-            delete : "",
-        }
-    },
-    {
-        invoice:712345,
-        description: "Payment for invoice",
-        amount: "$1,200.00",
-        status: {
-            label: "Successful",
-            state: "success",
-        },
-        date: "14 Dec 2020, 8:43 pm",
-        actions: {
-            update : "",
-            delete : "",
-        }
-    },
-    {
-        invoice:812345,
-        description: "Google cloud subscription",
-        amount: "$79.00",
-        status: {
-            label: "Successful",
-            state: "success",
-        },
-        date: "01 Dec 2020, 10:12 am",
-        actions: {
-            update : "",
-            delete : "",
-        }
-    },
-]);
+];
+
 </script>

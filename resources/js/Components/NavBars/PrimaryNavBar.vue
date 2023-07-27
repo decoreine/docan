@@ -191,7 +191,7 @@
 <script setup lang="ts">
 import {ref} from 'vue';
 import Dropdown from '@/Components/Dropdowns/Dropdown.vue';
-import Button from "@/Components/Buttons/Button.vue";
+import Button from "@/Components/Buttons/BaseButton.vue";
 import {useDark, useToggle} from '@vueuse/core'
 
 const isDark = useDark()

@@ -12,8 +12,17 @@
         "noEmit": true,
         "skipLibCheck": true,
         "paths": {
-            "@/*": ["./resources/js/*"]
-        }
+            "@/*": ["./resources/js/*"],
+        },
+        "types": ["vite/client", "node"],
+
+        //"noImplicitAny": false,
     },
-    "include": ["resources/js/**/*.ts", "resources/js/**/*.d.ts", "resources/js/**/*.vue"]
+    "include": [
+        "resources/js/**/*.ts",
+        "resources/js/**/*.d.ts",
+        "resources/js/**/*.vue",
+        "node_modules/@vue/runtime-core/dist/runtime-core.d.ts"
+    ],
+
 }

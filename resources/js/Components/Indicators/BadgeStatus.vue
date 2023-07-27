@@ -7,7 +7,7 @@ import {computed} from 'vue';
 const props = withDefaults(
     defineProps<{
         label?: string;
-        state?: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark';
+        state?: string; //'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark'
     }>(),
     {
         label: 'Primary',

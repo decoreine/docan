@@ -5,7 +5,7 @@ defineProps<{
     canLogin?: boolean;
     canRegister?: boolean;
     laravelVersion: string;
-    phpVe
+    phpVersion: string;
     rsion: string;
 }>();
 </script>
