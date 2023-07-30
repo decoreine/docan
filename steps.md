@@ -45,6 +45,7 @@
         npm install pinia
 12 - install object-path to read json files
         npm i object-path
+        npm i --save-dev @types/object-path
 13 - install Shiki Shiki is a beautiful Syntax Highlighter. 
         npm i shiki
 

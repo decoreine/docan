@@ -1,19 +1,19 @@
 <template>
-        <template v-if="icons[props.iconName]">
-            <Svg :fileName="icons[props.iconName]" folder="icons/duotune/" :svgClass="iconClass" />
+        <template v-if="iconsData[props.iconName]">
+            <Svg :fileName="iconsData[props.iconName]" folder="icons/duotune/" :svgClass="iconClass" />
         </template>
 </template>
 
 <script setup lang="ts">
-import icons from "/public/media/icons/duotune/duotune.json";
+import {iconsData} from "@/core/data/duotune";
 import Svg from "@/Components/Elements/Images/Svg.vue";
 
 const props = defineProps({
     iconName: {
         type: String,
         default: "",
-        required: true }
-    ,
+        required: true
+    },
     iconClass: {
         type: String,
         default: "",

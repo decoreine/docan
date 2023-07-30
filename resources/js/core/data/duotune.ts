@@ -1,4 +1,8 @@
-{
+interface AbstractIconsData {
+    [key: string]: string;
+}
+
+export const iconsData: AbstractIconsData = {
     "abs001": "abstract/abs001",
     "abs002": "abstract/abs002",
     "abs003": "abstract/abs003",
@@ -381,3 +385,4 @@
     "txt011": "text/txt011",
     "txt012": "text/txt012"
 }
+
