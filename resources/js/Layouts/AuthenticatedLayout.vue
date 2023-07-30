@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import PrimaryNavBar from '@/Components/NavBars/PrimaryNavBar.vue';
-import SideBar from '@/Components/SideBars/MainSideBar.vue';
-import HorizontalNavLink from '@/Components/NavElements/HorizontalNavLink.vue';
-import DropdownLink from '@/Components/Dropdowns/DropdownLink.vue';
-import VerticalNavLink from '@/Components/NavElements/VerticalNavLink.vue';
-import ApplicationLogo from '@/Components/Logo/ApplicationLogo.vue';
+import PrimaryNavBar from '@/Components/Elements/NavBars/PrimaryNavBar.vue';
+import SideBar from '@/Components/Elements/SideBars/MainSideBar.vue';
+import HorizontalNavLink from '@/Components/Elements/NavElements/HorizontalNavLink.vue';
+import DropdownLink from '@/Components/Elements/Dropdowns/DropdownLink.vue';
+import VerticalNavLink from '@/Components/Elements/NavElements/VerticalNavLink.vue';
+import ApplicationLogo from '@/Components/Elements/Logo/ApplicationLogo.vue';
 import { Link } from '@inertiajs/vue3';
 import {ref} from 'vue'
 

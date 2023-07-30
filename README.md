@@ -74,7 +74,7 @@
 
 15. Gonfiguration global
 
-        there is three file to Update  in config/global 
+        there is three file to Update  in layout_config/global 
 
             1 - general.php to change theme meta ( demos, Title and global javascript and css link )
             2 - menu.php to add some menu( by default there is (documentation,main,horizontal))

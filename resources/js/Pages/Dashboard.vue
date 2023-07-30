@@ -9,6 +9,21 @@
         </div>
         <!-- End Dashboard -->
 
+        <img
+            :src="getAssetPath('media/avatars/300-3.jpg')"
+            alt=""
+            class="mw-100 mh-300px"
+        />
+        <img
+            :src="getIllustrationsPath('9.png')"
+            alt=""
+            class="mw-100 mh-300px"
+        />
+
+        <Svg fileName="gen005" folder="icons/duotune/general" svgClass="text-blue-500 w-40 h-40" />
+        <Icon iconName="gen005" iconClass="text-red-800 w-40 h-40" />
+
+
         <!-- DataTable -->
         <DataTable
             :t_header=invoices_config
@@ -32,7 +47,9 @@
             </template>
 
             <template v-slot:date="{ row: item }">
-                {{ item.date }}
+                <div class="w-[140px]">
+                    {{ item.date }}
+                </div>
             </template>
 
             <template v-slot:actions="{ row: item }">
@@ -50,13 +67,17 @@
 </template>
 <script setup lang="ts">
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import ImageInput from '@/Components/Inputs/ImageInput.vue';
+import ImageInput from '@/Components/Elements/Inputs/ImageInput.vue';
 import { Head } from '@inertiajs/vue3';
 
-import DataTable from '@/Components/DataTable/Datatable.vue';
-import BadgeStatus from "@/Components/Indicators/BadgeStatus.vue";
+import DataTable from '@/Components/Elements/DataTable/Datatable.vue';
+import BadgeStatus from "@/Components/Elements/Indicators/BadgeStatus.vue";
 import invoices from "@/core/data/invoices";
 import {TableColumn} from "@/types/vite-env";
+
+import { getAssetPath ,getIllustrationsPath} from "@/core/helpers/assets";
+import Svg from "@/Components/Elements/Images/Svg.vue";
+import Icon from "@/Components/Elements/Images/DuotuneIcon.vue";
 
 const invoices_config : TableColumn[]= [
     {
